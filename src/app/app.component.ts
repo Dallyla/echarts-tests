@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MockService } from '../app/mock.service';
 import { HttpClient } from '@angular/common/http';
+import { faAngry } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -10,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   title = 'my-app';
+  faAngry = faAngry;
 
   constructor(private api: MockService, private http: HttpClient) { }
 
@@ -233,7 +235,28 @@ export class AppComponent implements OnInit {
           fontSize: 16,
           height: 20
         }
-      }],
+      }
+      // {
+      //   type: 'category',
+      //   data: ['\uf556', '\uf119', '\uf11a', '\uf118', '\uf580'],
+      //   position: 'bottom',
+      //   offset: 2,
+      //   //margin: 20,
+      //   axisLine: {
+      //     show: false
+      //   },
+      //   axisTick: {
+      //     show: false
+      //   },
+      //   splitLine: {
+      //     show: false,
+      //   },
+      //   axisLabel: {
+      //     fontSize: 16,
+      //     height: 25
+      //   }
+      // },
+    ],
       yAxis: {
         show: false,
         axisLine: {
@@ -293,7 +316,7 @@ export class AppComponent implements OnInit {
             }
           ],
           itemStyle: {
-            barBorderRadius: 5,
+            borderRadius: 5,
             borderWidth: 1,
             borderType: 'solid',
             //borderColor: '#73c0de',

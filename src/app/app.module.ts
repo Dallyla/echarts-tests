@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NgxEchartsModule } from 'ngx-echarts';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
 
@@ -15,7 +16,7 @@ import {
   TooltipComponent,
   GridComponent,
   LegendComponent,
-  ToolboxComponent
+  ToolboxComponent,
 } from 'echarts/components';
 // Import the Canvas renderer, note that introducing the CanvasRenderer or SVGRenderer is a required step
 import {
@@ -34,7 +35,8 @@ echarts.use(
   imports: [
     BrowserModule,
     NgxEchartsModule.forRoot({ echarts }),
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

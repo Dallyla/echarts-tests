@@ -1,11 +1,12 @@
 <h3>Gráfico Doughnut</h3>
 <div echarts [options]="doughnutOptions" class="chart"></div>
 
+<fa-icon [icon]="faAngry"></fa-icon>
 
 
 <h3>Gráfico Icon</h3>
 <h5>Evento de click:  {{barValue}}</h5>
-<div echarts [options]="optionBar3" class="chart" (chartClick)="onChartEvent($event, 'chartInit')"></div>
+<div echarts [options]="optionBar3" class="chart" (chartClick)="onChartEvent($event, 'chartClick')"></div>
 
 
 
