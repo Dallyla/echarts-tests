@@ -4,7 +4,9 @@
 
 
 <h3>Gráfico Icon</h3>
-<div echarts [options]="optionBar3" class="chart"></div>
+<h5>Evento de click:  {{barValue}}</h5>
+<div echarts [options]="optionBar3" class="chart" (chartClick)="onChartEvent($event, 'chartInit')"></div>
+
 
 
 <h3>Dados assíncronos: <button (click)="getData()" style="padding: 0.5em;">Get Data</button></h3>

@@ -108,6 +108,13 @@ export class AppComponent implements OnInit {
     }
   }
 
+  barValue!:number;
+
+  onChartEvent(event: any, type: string) {
+    console.log('chart event:', type, event);
+    this.barValue = event.value;
+  }
+
   iconBars() {
     /////////Gráfico barras 3 - Icons
 
@@ -144,6 +151,7 @@ export class AppComponent implements OnInit {
         }
       },
       xAxis: [{
+        triggerEvent: true,
         type: 'category',
         data: ['Pessimo', 'Ruim', 'Regular', 'Bom', 'Otimo'],
         axisLine: {
@@ -157,7 +165,7 @@ export class AppComponent implements OnInit {
         },
         axisLabel: {
           formatter: function (value: any) {
-            console.log(value);
+            //console.log(value);
 
             return '{' + value + '| }\n{value|' + value + '}';
           },
@@ -532,11 +540,14 @@ export class AppComponent implements OnInit {
         {
           name: 'Access From',
           type: 'pie',
-          radius: ['40%', '70%'],
+          radius: ['60%', '70%'],
           avoidLabelOverlap: false,
           label: {
-            show: false,
-            position: 'center'
+            formatter: '0%',
+            show: true,
+            position: 'center',
+            fontWeight: 'bold',
+            fontSize: 24
           },
           stillShowZeroSum: false,
           showEmptyCircle: false,
@@ -551,8 +562,8 @@ export class AppComponent implements OnInit {
             show: false
           },
           data: [
-            { value: 0, name: 'Search Engine (0)' },
-            { value: 0, name: 'Direct (0)' }
+            { value: 0, name: 'Respondidas' },
+            { value: 0, name: 'Não respondidas' }
           ]
         }
       ]
@@ -582,11 +593,13 @@ export class AppComponent implements OnInit {
     itemStyle: { color: 'brown' }
   }]
 
+  valueDonut = '50%';
 
   zerarDados() {
     this.data.map(item => {
       item.value = 0
     })
+    this.valueDonut = '0%';
   }
 
 
@@ -610,8 +623,15 @@ export class AppComponent implements OnInit {
       },
       series: [{
         type: "pie",
-        radius: ['40%', '70%'],
-        data: this.data
+        radius: ['70%', '50%'],
+        data: this.data,
+        label: {
+          formatter: this.valueDonut,
+          show: true,
+          position: 'center',
+          fontWeight: 'bold',
+          fontSize: 24
+        }
       }]
 
     };
