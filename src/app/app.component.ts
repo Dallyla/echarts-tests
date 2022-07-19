@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit  {
+export class AppComponent implements OnInit {
   title = 'my-app';
 
   constructor(private api: MockService, private http: HttpClient) { }
@@ -22,6 +22,9 @@ export class AppComponent implements OnInit  {
   mergeOption: any;
   loading = false;
   optionBar2: any;
+  lateralGraphOption: any;
+  optionPie: any;
+  emptyDonutOptions: any;
 
 
   ngOnInit(): void {
@@ -29,6 +32,10 @@ export class AppComponent implements OnInit  {
     this.iconBars();
     this.lineChart();
     this.multipleBars();
+    this.lateralGraph();
+    this.pieChart();
+    this.emptyDonut();
+
   }
 
   getData() {
@@ -57,7 +64,7 @@ export class AppComponent implements OnInit  {
             saveAsImage: {}
           }
         },
-        },
+      },
       tooltip: {
         trigger: 'item',
         formatter: '{b}: {d}%'
@@ -91,19 +98,20 @@ export class AppComponent implements OnInit  {
             show: false
           },
           data: [
-            { value: 0.5, name: 'Responderam' },
+            { value: 0.5, name: 'SMS' },
             { value: 0.3, name: 'Email' },
             { value: 0.2, name: 'NewsLetter' }
-          ]
+          ],
+          showEmptyCircle: true
         }
       ],
     }
   }
 
   iconBars() {
-     /////////Gráfico barras 3 - Icons
+    /////////Gráfico barras 3 - Icons
 
-     this.weatherIcons = {
+    this.weatherIcons = {
       'Sunny': 'http://simpleicon.com/wp-content/uploads/sun.png',
       // 'Sunny': 'https://echarts.apache.org/examples/data/asset/img/weather/sunny_128.png',
       'Cloudy': 'https://echarts.apache.org/examples/data/asset/img/weather/cloudy_128.png',
@@ -123,10 +131,11 @@ export class AppComponent implements OnInit  {
         text: 'Wheater Statistics'
       },
       tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-          type: 'shadow'
-        }
+        //trigger: 'axis',
+        // axisPointer: {
+        //   type: 'shadow'
+        // }
+        valueFormatter: (value: any) => value + ' mm'
       },
       toolbox: {
         show: true,
@@ -199,7 +208,7 @@ export class AppComponent implements OnInit  {
       },
       {
         type: 'category',
-        data: ['0%', '0%', '0%', '0%', '0%'],
+        data: ['43%', '60%', '75%', '89%', '0%'],
         position: 'bottom',
         offset: 50,
         //margin: 20,
@@ -234,9 +243,9 @@ export class AppComponent implements OnInit  {
           name: 'City Alpha',
           type: 'bar',
           barWidth: '60%',
-          showBackground: false,
+          showBackground: true,
           backgroundStyle: {
-            color: 'rgba(220, 220, 220, 0.8)'
+            color: 'rgba(180, 180, 180, 0.09)'
           },
           data: [
             {
@@ -268,7 +277,7 @@ export class AppComponent implements OnInit  {
               },
             },
             {
-              value: 0.1,
+              value: 0,
               itemStyle: {
                 color: '#219653',
                 shadowColor: '#219653'
@@ -321,9 +330,9 @@ export class AppComponent implements OnInit  {
   }
 
   multipleBars() {
-     ///Gráfico de barras 2
+    ///Gráfico de barras 2
 
-     this.optionBar2 = {
+    this.optionBar2 = {
       tooltip: {},
       xAxis: [
         {
@@ -345,9 +354,268 @@ export class AppComponent implements OnInit  {
       series: [{
         name: 'Series',
         type: 'bar',
-        data: [5, 20, 36, 10, 10, 20, 5, 20, 36, 10, 10, 20]
+        data: [5, 20, 36, 10, 10, 20, 5, 20, 36, 10, 10, 20],
+        showBackground: true,
+        backgroundStyle: {
+          color: 'rgba(220, 220, 220, 0.8)'
+        }
       }]
     }
   }
 
+  lateralGraph() {
+    /////// gráfico lateral
+
+    const seriesLabel = {
+      show: true
+    };
+
+    this.lateralGraphOption = {
+      title: {
+        text: 'Weather Statistics'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow'
+        }
+      },
+      legend: {
+        data: ['City Alpha', 'City Beta', 'City Gamma']
+      },
+      grid: {
+        left: 100
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {}
+        }
+      },
+      xAxis: {
+        type: 'value',
+        name: 'Days',
+        axisLabel: {
+          formatter: '{value}'
+        }
+      },
+      yAxis: {
+        type: 'category',
+        inverse: true,
+        data: ['Sunny', 'Cloudy', 'Showers'],
+        axisLabel: {
+          formatter: function (value: any): any {
+            return '{' + value + '| }\n{value|' + value + '}';
+          },
+          //margin: 20,
+          rich: {
+            value: {
+              lineHeight: 30,
+              align: 'center'
+            },
+            Sunny: {
+              height: 40,
+              align: 'center',
+              backgroundColor: {
+                image: this.weatherIcons.Sunny
+              }
+            },
+            Cloudy: {
+              height: 40,
+              align: 'center',
+              backgroundColor: {
+                image: this.weatherIcons.Cloudy
+              }
+            },
+            Showers: {
+              height: 40,
+              align: 'center',
+              backgroundColor: {
+                image: this.weatherIcons.Showers
+              }
+            }
+          }
+        }
+      },
+      series: [
+        {
+          name: 'City Alpha',
+          type: 'bar',
+          data: [165, 170, 30],
+          label: seriesLabel,
+          markPoint: {
+            symbolSize: 1,
+            symbolOffset: [0, '50%'],
+            label: {
+              formatter: '{a|{a}\n}{b|{b} }{c|{c}}',
+              backgroundColor: 'rgb(242,242,242)',
+              borderColor: '#aaa',
+              borderWidth: 1,
+              borderRadius: 4,
+              padding: [4, 10],
+              lineHeight: 26,
+              // shadowBlur: 5,
+              // shadowColor: '#000',
+              // shadowOffsetX: 0,
+              // shadowOffsetY: 1,
+              position: 'right',
+              distance: 20,
+              rich: {
+                a: {
+                  align: 'center',
+                  color: '#fff',
+                  fontSize: 18,
+                  textShadowBlur: 2,
+                  textShadowColor: '#000',
+                  textShadowOffsetX: 0,
+                  textShadowOffsetY: 1,
+                  textBorderColor: '#333',
+                  textBorderWidth: 2
+                },
+                b: {
+                  color: '#333'
+                },
+                c: {
+                  color: '#ff8811',
+                  textBorderColor: '#000',
+                  textBorderWidth: 1,
+                  fontSize: 22
+                }
+              }
+            },
+            data: [
+              { type: 'max', name: 'max days: ' },
+              { type: 'min', name: 'min days: ' }
+            ]
+          }
+        },
+        {
+          name: 'City Beta',
+          type: 'bar',
+          label: seriesLabel,
+          data: [150, 105, 110]
+        },
+        {
+          name: 'City Gamma',
+          type: 'bar',
+          label: seriesLabel,
+          data: [220, 82, 63]
+        }
+      ]
+    };
+
+  }
+
+  pieChart() {
+    this.optionPie = {
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        top: '5%',
+        left: 'center'
+      },
+      series: [
+        {
+          type: 'pie',
+          radius: ['40%', '70%'],
+          label: {
+            show: false
+          },
+          itemStyle: {
+            color: '#eee'
+          },
+          silent: true,
+          z: -1,
+          animation: false
+        },
+        {
+          name: 'Access From',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: 'center'
+          },
+          stillShowZeroSum: false,
+          showEmptyCircle: false,
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '40',
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: [
+            { value: 0, name: 'Search Engine (0)' },
+            { value: 0, name: 'Direct (0)' }
+          ]
+        }
+      ]
+    }
+  };
+
+  ////////////////empty donut
+  data = [{
+    value: 2,
+    name: "Apple",
+    itemStyle: { color: 'red' }
+  }, {
+    value: 3,
+    name: "Grapes",
+    itemStyle: { color: 'blue' }
+  }, {
+    value: 7,
+    name: "Pineapples",
+    itemStyle: { color: 'pink' }
+  }, {
+    value: 9,
+    name: "Oranges",
+    itemStyle: { color: 'yellow' }
+  }, {
+    value: 15,
+    name: "Bananas",
+    itemStyle: { color: 'brown' }
+  }]
+
+
+  zerarDados() {
+    this.data.map(item => {
+      item.value = 0
+    })
+  }
+
+
+
+  emptyDonut() {
+
+    this.zerarDados();
+
+    let isAllZero = this.data.every(item => item.value === 0);
+
+    this.data.map(item => {
+      item.itemStyle = { color: isAllZero ? '#cbcdd1' : item.itemStyle.color }
+    })
+
+    this.emptyDonutOptions = {
+
+      legend: {
+        orient: "vertical",
+        left: "left",
+        data: ["Apple", "Grapes", "Pineapples", "Oranges", "Bananas"]
+      },
+      series: [{
+        type: "pie",
+        radius: ['40%', '70%'],
+        data: this.data
+      }]
+
+    };
+
+
+  }
 }
